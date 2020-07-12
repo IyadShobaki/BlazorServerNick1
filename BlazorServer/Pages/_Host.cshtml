@@ -1,4 +1,10 @@
-﻿@page "/"
+﻿@*@page "/"*@
+
+
+@*if we need to add . to our page route*@
+@page "/{**.path}"
+
+
 @namespace BlazorServer.Pages
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 @{
