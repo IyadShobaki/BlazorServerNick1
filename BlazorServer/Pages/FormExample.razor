@@ -1,0 +1,69 @@
+﻿@page "/form-example"
+@using BlazorServer.Data
+@using  System.Text.Json
+@inject IJSRuntime JsRuntime
+
+<h1>Forms and Validation</h1>
+
+<div>
+    <span id="resultJson"></span>
+</div>
+
+<EditForm Model="@jobApplication" OnValidSubmit="@SubmitJobApplication">
+    <DataAnnotationsValidator/>
+    @*<ValidationSummary/>*@
+    <p>
+        <label for="fullname">Full Name:</label>
+        <InputText id="fullname" @bind-Value="jobApplication.FullName" 
+                   @oninput="@(EventCallback.Factory.CreateBinder<string>(this,
+                   newValue => Task.FromResult(TypeCheck(newValue)), string.Empty))"/>
+        <ValidationMessage For="@(() => jobApplication.FullName)"/>
+    </p>
+    <p>
+        <label for="desc">Description:</label>
+        <InputTextArea id="desc" @bind-Value="jobApplication.Description" />
+        <ValidationMessage For="@(() => jobApplication.Description)" />
+    </p>
+    <p>
+        <label for="salary">Salary Expectation:</label>
+        <InputNumber id="salary" @bind-Value="jobApplication.SalaryExpectation" />
+        <ValidationMessage For="@(() => jobApplication.SalaryExpectation)" />
+    </p>
+    <p>
+        <label for="opensource">Are you doinf open source?</label>
+        <InputCheckbox id="opensource" @bind-Value="jobApplication.DoesOpenSource" />
+        <ValidationMessage For="@(() => jobApplication.DoesOpenSource)" />
+    </p>
+    <p>
+        <label for="availability">Interview Availability</label>
+        <InputDate id="availability" @bind-Value="jobApplication.Availability" />
+        <ValidationMessage For="@(() => jobApplication.Availability)" />
+    </p>
+
+    <button type="submit">Submit</button>
+</EditForm>
+
+
+
+@code{
+    private JobApplication jobApplication = new JobApplication();
+
+  
+
+    private async Task TypeCheck(string currentValue)
+    {
+        await JsRuntime.InvokeVoidAsync("setElementTextById", "resultJson",
+           $"Current Value is: { currentValue }");
+    }
+
+
+
+
+    private async Task SubmitJobApplication()
+    {
+        await JsRuntime.InvokeVoidAsync("setElementTextById", "resultJson",
+           JsonSerializer.Serialize(jobApplication));
+    }
+
+
+}
