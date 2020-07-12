@@ -25,6 +25,14 @@
 <button class="btn btn-danger" @onclick="Focus">Focus!</button>
 
 
+<h3>Giv me random int</h3>
+
+<div>
+    The random number is: <span id="randomNumberSpan"></span>
+</div>
+
+@*<button class="btn btn-info" onclick="giveMeRandomInt(100)">Randomize</button>*@
+<button class="btn btn-info" @onclick="GenerateRandom">Randomize</button>
 
 
 @code{
@@ -51,4 +59,23 @@
     }
 
 
+    async Task GenerateRandom()
+    {
+
+        //await JsRuntime.InvokeVoidAsync("giveMeRandomInt", 100,
+        //    DotNetObjectReference.Create(this));
+
+        await JsRuntime.InvokeVoidAsync("giveMeRandomInt", 100,
+           DotNetObjectReference.Create(new BlazorServer.Helpers.RandomHelper()));
+    }
+
+    //[JSInvokable]
+    //public Task<int> GenerateRandomInt(int maxValue)
+    //{
+    //    return Task.FromResult(new Random().Next(maxValue));
+    //}
+    //public static Task<int> GenerateRandomInt(int maxValue)
+    //{
+    //    return Task.FromResult(new Random().Next(maxValue));
+    //}
 }
