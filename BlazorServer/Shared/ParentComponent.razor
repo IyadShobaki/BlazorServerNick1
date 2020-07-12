@@ -1,6 +1,14 @@
-﻿<div class="alert alert-success">
-@AlertText
-</div> 
+﻿@using Microsoft.AspNetCore.Components
+@*@inject RandomService RandomService*@
+
+<div class="alert alert-success">
+    @AlertText
+</div>
+
+
+@*<div class="alert alert-danger">
+    My random id is: @RandomService.RandomId
+</div>*@
 
 <ChildComponent>This is a child</ChildComponent>
 

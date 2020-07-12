@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Components;
+﻿using BlazorServer.Services;
+using Microsoft.AspNetCore.Components;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,6 +10,11 @@ namespace BlazorServer.Shared
     public class ChildCompnentBase : ComponentBase
     {
         protected bool DarkThemOn;
+        [Inject]
+        protected RandomService RandomService { get; set; }
+
+  
+
         protected string AlertTheme => DarkThemOn ? "dark" : "light";
 
         [Parameter]
